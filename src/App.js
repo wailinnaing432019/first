@@ -1,61 +1,43 @@
-import { useRef, useState } from "react"
 
-function Item(props){
-  return <li>{props.name} ,${props.price}</li>
-}
+import { Link,Routes,Route } from "react-router-dom";
 
+const users = [
+  { id: 1, name: 'Alice', gender: 'f' },
+  { id: 2, name: 'Bob', gender: 'm' },
+  { id: 3, name: 'Tom', gender: 'm' },
+  { id: 4, name: 'Mary', gender: 'f' },
+];
 
-function AddForm(props){
-
-  const nameRef=useRef();
-  const priceRef=useRef();
-
-
+function Male(props){
   return (
-    <form onSubmit={e=>{
-      e.preventDefault();
-      props.add(
-        nameRef.current.value,
-        priceRef.current.value
-      );
-      nameRef.current.value="";
-      priceRef.current.value="";
-    }}>
-
-      <input type="text" ref={nameRef} /> <br />
-      <input type="number" ref={priceRef} /> <br />
-      <button type="submit">Add</button>
-    </form>
-  );
-}
-function App()
-{
-  const [data,setData]=useState([
-    {id:1,name:"orange",price:0.2},
-    {id:2,name:"Apple",price:0.8}
-  ]);
-
-  const add=(name,price)=>{
-
-    const id=data.length+1; 
-
-    setData([
-      ...data,
-      {id,name,price}
-    ])
-
-
-  }
- 
-  return (
-    <divL>
-      <h1>Hello World</h1>
-      <ul>
-        {data.map(i=><Item name={i.name} price={i.price} />)}
-      </ul>
-      <AddForm add={add} />
-    </divL>
+    <ul>
+      {users.filter(u=> u.gender==='m').map(u=><li key={u.id}>{u.name}</li>)}
+    </ul>
   )
 }
 
+function Female(props){
+  return (
+    <ul>
+      {users.filter(u=> u.gender==='f').map(u=><li key={u.id}>{u.name}</li>)}
+    </ul>
+  )
+}
+function App(){
+  return (
+    <div>
+      <h1>HELLO WORLD</h1>
+      <ul>
+        <li><Link to="Male">Male</Link></li>
+        <li><Link to="Female">Female</Link></li>
+      </ul>
+      <div>
+      <Routes>
+        <Route path="/male" element={<Male />}></Route>
+        <Route path="/female" element={<Female />}></Route>
+      </Routes>
+      </div>
+    </div>
+  );
+}
 export default App
