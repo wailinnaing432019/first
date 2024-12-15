@@ -1,41 +1,21 @@
 
-import { Link,Routes,Route } from "react-router-dom";
+import { Routes,Route,useParams, useNavigate } from "react-router-dom";
 
-const users = [
-  { id: 1, name: 'Alice', gender: 'f' },
-  { id: 2, name: 'Bob', gender: 'm' },
-  { id: 3, name: 'Tom', gender: 'm' },
-  { id: 4, name: 'Mary', gender: 'f' },
-];
-
-function Male(props){
-  return (
-    <ul>
-      {users.filter(u=> u.gender==='m').map(u=><li key={u.id}>{u.name}</li>)}
-    </ul>
-  )
-}
-
-function Female(props){
-  return (
-    <ul>
-      {users.filter(u=> u.gender==='f').map(u=><li key={u.id}>{u.name}</li>)}
-    </ul>
-  )
+function User(){
+  const {name}=useParams();
+  return <h1>Profile - {name}</h1>
 }
 function App(){
+  const navigate=useNavigate();
+
   return (
     <div>
-      <h1>HELLO WORLD</h1>
-      <ul>
-        <li><Link to="Male">Male</Link></li>
-        <li><Link to="Female">Female</Link></li>
-      </ul>
-      <div>
-      <Routes>
-        <Route path="/male" element={<Male />}></Route>
-        <Route path="/female" element={<Female />}></Route>
-      </Routes>
+      <button onClick={()=>navigate("/usre/alice")}>Alice</button>
+      <button onClick={()=>navigate("/usre/bob")}>Bob</button>
+      <div style={{padding:20,background:"cyan"}}>
+        <Routes>
+          <Route path="user/:name" element={<User />} /> 
+        </Routes>
       </div>
     </div>
   );
